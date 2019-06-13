@@ -1,3 +1,7 @@
+# Clear terminal
+# ----------------------
+alias c='clear'
+
 
 # Change dir Aliases
 # ----------------------
