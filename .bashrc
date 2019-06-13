@@ -119,3 +119,6 @@ fi
 
 # Costum max dir path 2 long
 PROMPT_DIRTRIM=2
+
+# Sass
+export PATH="~/dart-sass:$PATH"
