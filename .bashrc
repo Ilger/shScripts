@@ -117,5 +117,5 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# max dir path 2 long
+# Costum max dir path 2 long
 PROMPT_DIRTRIM=2
