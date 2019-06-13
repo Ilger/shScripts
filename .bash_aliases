@@ -13,6 +13,11 @@ alias prj='cd ~/Desktop/CodePrjcts/'
 # filemanager
 alias ofm='xdg-open .'
 
+# Sass watch and compile
+# ----------------------
+alias sw='sass --watch'
+alias sv='sass --version'
+
 # ----------------------
 # Git Aliases
 # ----------------------
