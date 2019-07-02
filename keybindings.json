@@ -1,0 +1,39 @@
+// Place your key bindings in this file to override the defaultsauto[]
+[
+    {
+        "key": "ctrl+shift+c",
+        "command": "editor.action.insertSnippet",
+        "when": "editorTextFocus",
+        "args": {
+          "snippet": "console.log('${TM_SELECTED_TEXT}$1')$2;"
+        }
+      },
+      {
+        "key": "ctrl+b",
+        "command": "-workbench.action.showAllEditors"
+      },
+      {
+        "key": "f1",
+        "command": "workbench.action.focusActiveEditorGroup",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "f1",
+        "command": "workbench.action.terminal.focus",
+        "when": "!terminalFocus"
+    },
+    {
+      "key": "f4",
+      "command": "workbench.action.terminal.kill"
+    },
+    {
+      "key": "ctrl+shift+g",
+      "command": "workbench.action.focusActiveEditorGroup",
+      "when": "scmFocus"
+    },
+    {
+      "key": "ctrl+shift+g",
+      "command": "workbench.view.scm",
+      "when": "!scmFocus"
+    },
+]
