@@ -2,21 +2,46 @@
 # ----------------------
 alias c='clear'
 
+#switch terminal back to bash
+alias swt='chsh -s /bin/bash'
 
 # Change dir Aliases
 # ----------------------
-alias prj='cd ~/Desktop/CodePrjcts/'
+alias p='cd ~/Desktop/CodePrjcts/'
+alias h='cd ~/Desktop/CodePrjcts/other,\ test\ and\ learn/internettingishard'
+
+cc ()
+{
+    cd "$1" &&
+    code
+}
+
+mc ()
+{
+    mkdir -p -- "$1" &&
+      cd -P -- "$1"
+}
+
+mcw ()
+{
+    mkdir -p -- "$1" &&
+      cd -P -- "$1"  &&
+    touch index.html &&
+    touch style.css  &&
+    code .
+}
 
 
-# open
+# open apps
 # ----------------------
-# filemanager
-alias ofm='xdg-open .'
+alias o='xdg-open .'
+alias a='atom .'
 
 # Sass watch and compile
 # ----------------------
 alias sw='sass --watch'
 alias sv='sass --version'
+
 
 # ----------------------
 # Git Aliases
