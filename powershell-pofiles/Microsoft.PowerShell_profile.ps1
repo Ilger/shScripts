@@ -1,7 +1,6 @@
 ﻿
 Import-Module 'C:\tools\poshgit\dahlbyk-posh-git-9bda399\src\posh-git.psd1'
 
-
 # ----------------------
 # Aliases:
 # ----------------------
@@ -19,13 +18,13 @@ New-Alias -Name "c." -Value Open-VSCode -Force -Option AllScope
 
 # Docker aliases
 # ----------------------
-function Get-DockerPs { & 'docker' 'ps' $args}
+function Get-DockerContainerLS { & 'docker' 'container' 'ls' $args}
 function Get-DockerPsA { & 'docker' 'ps' '-a' $args }
-New-Alias -Name "dps" -Value "Get-DockerPs" -Force -Option AllScope
+New-Alias -Name "dps" -Value "Get-DockerContainerLS" -Force -Option AllScope
 New-Alias -Name "dpsa" -Value "Get-DockerPsA" -Force -Option AllScope
 # Docker-compse
-function Get-DockerPs { & 'docker-compose' 'ps' $args}
-New-Alias -Name "dcps" -Value "Get-DockerPs" -Force -Option AllScope
+function Get-DockerComposePs { & 'docker-compose' 'ps' $args}
+New-Alias -Name "dcps" -Value "Get-DockerComposePs" -Force -Option AllScope
 
 
 # ----------------------
