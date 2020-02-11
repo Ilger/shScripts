@@ -17,10 +17,10 @@ New-Alias -Name o -Value Open-Explore -Force -Option AllScope
 function Open-VSCode { & code.cmd . }
 New-Alias -Name "c." -Value Open-VSCode -Force -Option AllScope
 
-function Open-dirProjects { & 'cd'  'C:\Users\idmrr\Documents\projects\'$args}
+function Open-dirProjects { & Set-Location C:\Users\idmrr\Documents\projects\$args}
 New-Alias -Name "cdp" -Value Open-dirProjects -Force -Option AllScope
 
-function Open-dirProjectsCrax { & 'cd'  'C:\Users\idmrr\Documents\projects\crax\'$args}
+function Open-dirProjectsCrax { & Set-Location C:\Users\idmrr\Documents\projects\crax\$args}
 New-Alias -Name "cdpc" -Value Open-dirProjectsCrax -Force -Option AllScope
 
 # Docker aliases
