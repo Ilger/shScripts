@@ -1,5 +1,6 @@
-﻿
+
 Import-Module 'C:\tools\poshgit\dahlbyk-posh-git-9bda399\src\posh-git.psd1'
+
 
 # ----------------------
 # Aliases:
@@ -15,6 +16,12 @@ function Open-Explore { & explorer.exe . }
 New-Alias -Name o -Value Open-Explore -Force -Option AllScope
 function Open-VSCode { & code.cmd . }
 New-Alias -Name "c." -Value Open-VSCode -Force -Option AllScope
+
+function Open-dirProjects { & 'cd'  'C:\Users\idmrr\Documents\projects\'$args}
+New-Alias -Name "cdp" -Value Open-dirProjects -Force -Option AllScope
+
+function Open-dirProjectsCrax { & 'cd'  'C:\Users\idmrr\Documents\projects\crax\'$args}
+New-Alias -Name "cdpc" -Value Open-dirProjectsCrax -Force -Option AllScope
 
 # Docker aliases
 # ----------------------
@@ -51,6 +58,7 @@ function Get-GitStatusLong { & git status --long $args }
 function Get-GitStatusShort { & git status -s $args }
 function Get-GitRemote { & git remote -v $args }
 
+
 # The aliases
 New-Alias -Name ga -Value Get-GitAdd -Force -Option AllScope
 New-Alias -Name gaa -Value Get-GitAddAll -Force -Option AllScope
@@ -70,3 +78,9 @@ New-Alias -Name gpl -Value Get-GitPull -Force -Option AllScope
 New-Alias -Name gs -Value Get-GitStatusLong -Force -Option AllScope
 New-Alias -Name gss -Value Get-GitStatusShort -Force -Option AllScope
 New-Alias -Name gr -Value Get-GitRemote -Force -Option AllScope
+
+# Chocolatey profile
+$ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+if (Test-Path($ChocolateyProfile)) {
+  Import-Module "$ChocolateyProfile"
+}
