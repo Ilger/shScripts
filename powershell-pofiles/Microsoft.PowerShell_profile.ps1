@@ -89,11 +89,11 @@ if (Test-Path($ChocolateyProfile)) {
 # yarn link/unlink bookit
 function Open-YarnLinkCraxAngularCore { 
   Write-Host "Checking if Crax-Core is on local device"
-  $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
+  $Currentlocation = Get-Location
   if (Test-Path -Path "..\Crax.Angular.Core\dist\angular-crax-core") {
     cd "..\Crax.Angular.Core\dist\angular-crax-core"
     yarn link 
-    cd "$ScriptDir"
+    cd "$Currentlocation"
     yarn link "@crax/angular-core"
     Write-Host "Successfully linked Core package"
   }
@@ -106,11 +106,11 @@ New-Alias -Name "ylccm" -Value Open-YarnLinkCraxAngularCore -Force -Option AllSc
 
 function Open-YarnLinkCraxAngularForm{ 
   Write-Host "Checking if Crax-Angular-Forms is on local device"
-  $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
+  $Currentlocation = Get-Location
   if (Test-Path -Path "..\Crax.Angular.Forms\dist\angular-crax-forms") {
     cd "..\Crax.Angular.Forms\dist\angular-crax-forms"
     yarn link
-    cd "$ScriptDir"
+    cd "$Currentlocation"
     yarn link "@crax/angular-forms"
     Write-Host "Successfully linked Forms package"
   }
@@ -123,11 +123,11 @@ New-Alias -Name "ylcfm" -Value Open-YarnLinkCraxAngularForm -Force -Option AllSc
 
 function Open-YarnLinkCraxAngularTable{ 
   Write-Host "Checking if Crax-Angular-Table is on local device"
-  $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
+  $Currentlocation = Get-Location
   if (Test-Path -Path "..\Crax.Angular.Table\dist\angular-crax-table") {
     cd "..\Crax.Angular.Table\dist\angular-crax-table"
     yarn link
-    cd "$ScriptDir"
+    cd "$Currentlocation"
     yarn link "@crax/angular-table"
     Write-Host "Successfully linked Table package"
   }
@@ -141,12 +141,12 @@ New-Alias -Name "ylcct" -Value Open-YarnLinkCraxAngularTable -Force -Option AllS
 
 function Open-YarnUnLinkCraxAngularCore { 
   Write-Host "Checking if Crax-Core is on local device"
-  $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
+  $Currentlocation = Get-Location
   if (Test-Path -Path "..\Crax.Angular.Core\dist\angular-crax-core") {
       yarn unlink "@crax/angular-core"
       cd "..\Crax.Angular.Core\dist\angular-crax-core"
       yarn unlink 
-      cd "$ScriptDir"
+      cd "$Currentlocation"
       Write-Host "Successfully unlinked Core package"
   }
   else {
@@ -158,12 +158,12 @@ New-Alias -Name "yulccm" -Value Open-YarnUnLinkCraxAngularCore -Force -Option Al
 
 function Open-YarnUnLinkCraxAngularForm{ 
   Write-Host "Checking if Crax-Forms is on local device"
-  $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
+  $Currentlocation = Get-Location
   if (Test-Path -Path "..\Crax.Angular.Forms\dist\angular-crax-forms") {
     yarn unlink "@crax/angular-forms"
     cd "..\Crax.Angular.Forms\dist\angular-crax-forms"
     yarn unlink
-    cd "$ScriptDir"
+    cd "$Currentlocation"
     Write-Host "Successfully unlinked Forms package"
   }
   else {
@@ -175,12 +175,12 @@ New-Alias -Name "yulcfm" -Value Open-YarnUnLinkCraxAngularForm -Force -Option Al
 
 function Open-YarnUnLinkCraxAngularTable{ 
   Write-Host "Checking if Crax-Table is on local device"
-  $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
+  $Currentlocation = Get-Location
   if (Test-Path -Path "..\Crax.Angular.Table\dist\angular-crax-table") {
     yarn unlink "@crax/angular-table"
     cd "..\Crax.Angular.Table\dist\angular-crax-table"
     yarn unlink
-    cd "$ScriptDir"
+    cd "$Currentlocation"
     Write-Host "Successfully unlinked Table package"
   }
   else {
