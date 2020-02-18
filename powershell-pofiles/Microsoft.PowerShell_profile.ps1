@@ -84,3 +84,107 @@ $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
 if (Test-Path($ChocolateyProfile)) {
   Import-Module "$ChocolateyProfile"
 }
+
+
+# yarn link/unlink bookit
+function Open-YarnLinkCraxAngularCore { 
+  Write-Host "Checking if Crax-Core is on local device"
+  $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
+  if (Test-Path -Path "..\Crax.Angular.Core\dist\angular-crax-core") {
+    cd "..\Crax.Angular.Core\dist\angular-crax-core"
+    yarn link 
+    cd "$ScriptDir"
+    yarn link "@crax/angular-core"
+    Write-Host "Successfully linked Core package"
+  }
+  else {
+    Write-Host "CRAX-CORE NOT FOUND!"
+    Write-Host "Please clone the Crax.Core.Angular repository onto your device, or if you already have the repository build the library first by navigating into the folder and using 'ng build --watch'"
+  }
+}
+New-Alias -Name "ylccm" -Value Open-YarnLinkCraxAngularCore -Force -Option AllScope
+
+function Open-YarnLinkCraxAngularForm{ 
+  Write-Host "Checking if Crax-Angular-Forms is on local device"
+  $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
+  if (Test-Path -Path "..\Crax.Angular.Forms\dist\angular-crax-forms") {
+    cd "..\Crax.Angular.Forms\dist\angular-crax-forms"
+    yarn link
+    cd "$ScriptDir"
+    yarn link "@crax/angular-forms"
+    Write-Host "Successfully linked Forms package"
+  }
+  else {
+    Write-Host "CRAX-FORMS NOT FOUND!"
+    Write-Host "Please clone the Crax.Forms.Angular repository onto your device, or if you already have the repository build the library first by navigating into the folder and using 'ng build --watch'"
+  }
+}
+New-Alias -Name "ylcfm" -Value Open-YarnLinkCraxAngularForm -Force -Option AllScope
+
+function Open-YarnLinkCraxAngularTable{ 
+  Write-Host "Checking if Crax-Angular-Table is on local device"
+  $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
+  if (Test-Path -Path "..\Crax.Angular.Table\dist\angular-crax-table") {
+    cd "..\Crax.Angular.Table\dist\angular-crax-table"
+    yarn link
+    cd "$ScriptDir"
+    yarn link "@crax/angular-table"
+    Write-Host "Successfully linked Table package"
+  }
+  else {
+    Write-Host "CRAX-TABLE NOT FOUND!"
+    Write-Host "Please clone the Crax.Table.Angular repository onto your device, or if you already have the repository build the library first by navigating into the folder and using 'ng build --watch'"
+  }  
+}
+New-Alias -Name "ylcct" -Value Open-YarnLinkCraxAngularTable -Force -Option AllScope
+
+
+function Open-YarnUnLinkCraxAngularCore { 
+  Write-Host "Checking if Crax-Core is on local device"
+  $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
+  if (Test-Path -Path "..\Crax.Angular.Core\dist\angular-crax-core") {
+      yarn unlink "@crax/angular-core"
+      cd "..\Crax.Angular.Core\dist\angular-crax-core"
+      yarn unlink 
+      cd "$ScriptDir"
+      Write-Host "Successfully unlinked Core package"
+  }
+  else {
+      Write-Host "Please clone the repository onto your device, or if you already have the repository build the library first using 'ng build --watch'"
+  }
+  
+}
+New-Alias -Name "yulccm" -Value Open-YarnUnLinkCraxAngularCore -Force -Option AllScope
+
+function Open-YarnUnLinkCraxAngularForm{ 
+  Write-Host "Checking if Crax-Forms is on local device"
+  $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
+  if (Test-Path -Path "..\Crax.Angular.Forms\dist\angular-crax-forms") {
+    yarn unlink "@crax/angular-forms"
+    cd "..\Crax.Angular.Forms\dist\angular-crax-forms"
+    yarn unlink
+    cd "$ScriptDir"
+    Write-Host "Successfully unlinked Forms package"
+  }
+  else {
+    Write-Host "Please clone the repository onto your device, or if you already have the repository build the library first using 'ng build --watch'"
+  }
+  
+}
+New-Alias -Name "yulcfm" -Value Open-YarnUnLinkCraxAngularForm -Force -Option AllScope
+
+function Open-YarnUnLinkCraxAngularTable{ 
+  Write-Host "Checking if Crax-Table is on local device"
+  $ScriptDir = Split-Path $script:MyInvocation.MyCommand.Path
+  if (Test-Path -Path "..\Crax.Angular.Table\dist\angular-crax-table") {
+    yarn unlink "@crax/angular-table"
+    cd "..\Crax.Angular.Table\dist\angular-crax-table"
+    yarn unlink
+    cd "$ScriptDir"
+    Write-Host "Successfully unlinked Table package"
+  }
+  else {
+    Write-Host "Please clone the repository onto your device, or if you already have the repository build the library first using 'ng build --watch'"
+  }
+}
+New-Alias -Name "yulcct" -Value Open-YarnUnLinkCraxAngularTable -Force -Option AllScope
