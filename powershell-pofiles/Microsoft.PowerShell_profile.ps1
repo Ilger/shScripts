@@ -29,10 +29,10 @@ New-Alias -Name "cdb" -Value Open-dirBookit -Force -Option AllScope
 function Open-dirBookitApi { & Set-Location C:\Users\idmrr\Documents\projects\crax\bookitapi\$args}
 New-Alias -Name "cdba" -Value Open-dirBookitApi -Force -Option AllScope
 
-function Open-dirCraxAgularCore { & Set-Location C:\Users\idmrr\Documents\projects\crax\bookitapi\crax.angular.core\$args}
+function Open-dirCraxAgularCore { & Set-Location C:\Users\idmrr\Documents\projects\crax\Crax.Angular.Core$args}
 New-Alias -Name "cdccm" -Value Open-dirCraxAgularCore  -Force -Option AllScope
 
-function Open-dirCraxAgularForm { & Set-Location C:\Users\idmrr\Documents\projects\crax\bookitapi\crax.angular.forms\$args}
+function Open-dirCraxAgularForm { & Set-Location C:\Users\idmrr\Documents\projects\crax\Crax.Angular.Forms$args}
 New-Alias -Name "cdcfm" -Value Open-dirCraxAgularForm  -Force -Option AllScope
 
 # Docker aliases
