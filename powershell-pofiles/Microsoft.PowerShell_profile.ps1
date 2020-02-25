@@ -148,7 +148,7 @@ function Open-YarnLinkCraxAngularTable{
     Write-Host "Please clone the Crax.Table.Angular repository onto your device, or if you already have the repository build the library first by navigating into the folder and using 'ng build --watch'"
   }  
 }
-New-Alias -Name "ylcct" -Value Open-YarnLinkCraxAngularTable -Force -Option AllScope
+New-Alias -Name "ylctm" -Value Open-YarnLinkCraxAngularTable -Force -Option AllScope
 
 
 function Open-YarnUnLinkCraxAngularCore { 
@@ -199,4 +199,4 @@ function Open-YarnUnLinkCraxAngularTable{
     Write-Host "Please clone the repository onto your device, or if you already have the repository build the library first using 'ng build --watch'"
   }
 }
-New-Alias -Name "yulcct" -Value Open-YarnUnLinkCraxAngularTable -Force -Option AllScope
+New-Alias -Name "yulctm" -Value Open-YarnUnLinkCraxAngularTable -Force -Option AllScope
