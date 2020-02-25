@@ -35,6 +35,9 @@ New-Alias -Name "cdccm" -Value Open-dirCraxAgularCore  -Force -Option AllScope
 function Open-dirCraxAgularForm { & Set-Location C:\Users\idmrr\Documents\projects\crax\Crax.Angular.Forms$args}
 New-Alias -Name "cdcfm" -Value Open-dirCraxAgularForm  -Force -Option AllScope
 
+function Open-dirCraxAgularTable { & Set-Location C:\Users\idmrr\Documents\projects\Crax\Crax.Angular.Table$args}
+New-Alias -Name "cdctm" -Value Open-dirCraxAgularTable  -Force -Option AllScope
+
 # Docker aliases
 # ----------------------
 function Get-DockerContainerLS { & 'docker' 'container' 'ls' $args}
