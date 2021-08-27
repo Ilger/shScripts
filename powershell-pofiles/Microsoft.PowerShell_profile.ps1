@@ -1,5 +1,7 @@
 
-
+# Import-Module ZLocation
+# Import-Module TabExpansionPlusPlus
+# Import-Module PoShFuck
 Import-Module 'C:\tools\poshgit\dahlbyk-posh-git-9bda399\src\posh-git.psd1'
 
 # ----------------------
@@ -22,29 +24,12 @@ function Open-dirProjects { & Set-Location $HOME\projects\$args }
 New-Alias -Name "cdp" -Value Open-dirProjects -Force -Option AllScope
 function Open-dirProjectEasypost { & Set-Location $HOME\projects\easypost$args }
 New-Alias -Name "cde" -Value Open-dirProjectEasypost -Force -Option AllScope
-function Open-dirProjectEasypostEasyPrint { & Set-Location $HOME\projects\easypost\easyprint$args }
-New-Alias -Name "cdee" -Value Open-dirProjectEasypostEasyPrint -Force -Option AllScope
+function Open-dirProjectEasypostBull { & Set-Location $HOME\projects\easypost\bull$args }
+New-Alias -Name "cdeb" -Value Open-dirProjectBull -Force -Option AllScope
 
-function Open-dirProjectsCrax { & Set-Location $HOME\projects\crax\$args }
-New-Alias -Name "cdpc" -Value Open-dirProjectsCrax -Force -Option AllScope
+function Open-dirProjectsCrax { & Set-Location $HOME\projects\craxit\$args }
+New-Alias -Name "cdcr" -Value Open-dirProjectsCrax -Force -Option AllScope
 
-function Open-dirBookit { & Set-Location $HOME\projects\crax\BookitWeb\$args }
-New-Alias -Name "cdb" -Value Open-dirBookit -Force -Option AllScope
-function Open-dirBookitWeb { & Set-Location $HOME\projects\crax\BookitWeb\$args }
-New-Alias -Name "cdbw" -Value Open-dirBookitWeb -Force -Option AllScope
-function Open-dirBookitApi { & Set-Location $HOME\projects\crax\BookitApi\$args }
-New-Alias -Name "cdba" -Value Open-dirBookitApi -Force -Option AllScope
-
-function Open-dirCraxAgularCore { & Set-Location $HOME\projects\crax\Angular.Core.Crax$args }
-New-Alias -Name "cdccm" -Value Open-dirCraxAgularCore  -Force -Option AllScope
-
-function Open-dirCraxAgularForm { & Set-Location $HOME\projects\crax\Angular.Forms.Crax$args }
-New-Alias -Name "cdcfm" -Value Open-dirCraxAgularForm  -Force -Option AllScope
-
-function Open-dirCraxAgularTable { & Set-Location $HOME\projects\Crax\Angular.Table.Crax$args }
-New-Alias -Name "cdctm" -Value Open-dirCraxAgularTable  -Force -Option AllScop
-function Open-dirCraxIdentityServer { & Set-Location $HOME\projects\Crax\IdentityCMS.Crax$args }
-New-Alias -Name "cdsso" -Value Open-dirCraxIdentityServer  -Force -Option AllScop
 
 # Docker aliases
 # ----------------------
@@ -52,12 +37,28 @@ function Get-DockerContainerLS { & 'docker' 'container' 'ls' $args }
 New-Alias -Name "dpsa" -Value "Get-DockerPsA" -Force -Option AllScope
 function Get-DockerExec { & 'docker' 'exec' '-it' $args '/bin/bash' }
 New-Alias -Name "dbash" -Value "Get-DockerExec" -Force -Option AllScope
+
+function Get-DockerStopAll { 
+    $dockerContainers = docker ps -q
+    docker stop $dockerContainers
+    docker system prune -a -f
+}
+New-Alias -Name "dstpa" -Value "Get-DockerStopAll" -Force -Option AllScope
+
+function Get-DockerCleanAll { & 'docker system prune -a' }
+New-Alias -Name "dclean" -Value "Get-DockerCleanAll" -Force -Option AllScope
 # Docker-compse
 function Get-DockerComposePs { & 'docker-compose' 'ps' $args }
 New-Alias -Name "dcps" -Value "Get-DockerComposePs" -Force -Option AllScope
 
 function Get-DockerCompose { & 'docker-compose' $args }
 New-Alias -Name "dc" -Value "Get-DockerCompose" -Force -Option AllScope
+
+function Get-DockerComposeDown { & 'docker-compose' 'down' $args }
+New-Alias -Name "dcd" -Value "Get-DockerComposeDown" -Force -Option AllScope
+
+function Get-DockerComposeUpSpecial { & 'docker-compose' 'up' '--build' '-d' '--remove-orphans' $args }
+New-Alias -Name "dcup" -Value "Get-DockerComposeUpSpecial" -Force -Option AllScope
 
 # ----------------------
 # Git aliases
@@ -70,24 +71,24 @@ function Get-GitCommit { & git commit $args }
 function Get-GitCommitMessage { & git commit -m $args }
 # function Get-GitCheckout { & 'git' 'checkout' $args }
 function Get-GitCheckout {
-  param(
-    [Parameter(Mandatory)]
-    [ValidateNotNullOrEmpty()]
-    [ArgumentCompleter( {
-        param($pCmd, $pParam, $pWord, $pAst, $pFakes)
+    param(
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [ArgumentCompleter( {
+                param($pCmd, $pParam, $pWord, $pAst, $pFakes)
 
-        $branchList = (git branch --format='%(refname:short)')
+                $branchList = (git branch --format='%(refname:short)')
 
-        if ([string]::IsNullOrWhiteSpace($pWord)) {
-          return $branchList;
-        }
+                if ([string]::IsNullOrWhiteSpace($pWord)) {
+                    return $branchList;
+                }
 
-        $branchList | Select-String "$pWord"
-      })]
-    [string] $branch
-  )
+                $branchList | Select-String "$pWord"
+            })]
+        [string] $branch
+    )
 
-  git checkout $branch;
+    git checkout $branch;
 }
 function Get-GitCheckoutBranch { & git checkout -b $args }
 function Get-GitCheckoutMaster { & git checkout master $args }
@@ -127,109 +128,24 @@ New-Alias -Name gr -Value Get-GitRemote -Force -Option AllScope
 # Chocolatey profile
 $ChocolateyProfile = "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
 if (Test-Path($ChocolateyProfile)) {
-  Import-Module "$ChocolateyProfile"
+    Import-Module "$ChocolateyProfile"
 }
 
 
-# yarn link/unlink bookit
-function Open-YarnLinkCraxAngularCore { 
-  Write-Host "Checking if Crax-Core is on local device"
-  $Currentlocation = Get-Location
-  if (Test-Path -Path "..\Angular.Core.Crax\dist\angular-crax-core") {
-    Set-Location "..\Angular.Core.Crax\dist\angular-crax-core"
-    yarn link 
-    Set-Location "$Currentlocation"
-    yarn link "@crax/angular-core"
-    Write-Host "Successfully linked Core package"
-  }
-  else {
-    Write-Host "CRAX-CORE NOT FOUND!"
-    Write-Host "Please clone the Crax.Core.Angular repository onto your device, or if you already have the repository build the library first by navigating into the folder and using 'ng build --watch'"
-  }
-}
-New-Alias -Name "ylccm" -Value Open-YarnLinkCraxAngularCore -Force -Option AllScope
-
-function Open-YarnLinkCraxAngularForm { 
-  Write-Host "Checking if Crax-Angular-Forms is on local device"
-  $Currentlocation = Get-Location
-  if (Test-Path -Path "..\Angular.Forms.Crax\dist\angular-crax-forms") {
-    Set-Location "..\Angular.Forms.Crax\dist\angular-crax-forms"
-    yarn link
-    Set-Location "$Currentlocation"
-    yarn link "@crax/angular-forms"
-    Write-Host "Successfully linked Forms package"
-  }
-  else {
-    Write-Host "CRAX-FORMS NOT FOUND!"
-    Write-Host "Please clone the Crax.Forms.Angular repository onto your device, or if you already have the repository build the library first by navigating into the folder and using 'ng build --watch'"
-  }
-}
-New-Alias -Name "ylcfm" -Value Open-YarnLinkCraxAngularForm -Force -Option AllScope
-
-function Open-YarnLinkCraxAngularTable { 
-  Write-Host "Checking if Crax-Angular-Table is on local device"
-  $Currentlocation = Get-Location
-  if (Test-Path -Path "..\Angular.Table.Crax\dist\angular-crax-table") {
-    Set-Location "..\Angular.Table.Crax\dist\angular-crax-table"
-    yarn link
-    Set-Location "$Currentlocation"
-    yarn link "@crax/angular-table"
-    Write-Host "Successfully linked Table package"
-  }
-  else {
-    Write-Host "CRAX-TABLE NOT FOUND!"
-    Write-Host "Please clone the Crax.Table.Angular repository onto your device, or if you already have the repository build the library first by navigating into the folder and using 'ng build --watch'"
-  }  
-}
-New-Alias -Name "ylctm" -Value Open-YarnLinkCraxAngularTable -Force -Option AllScope
-
-
-function Open-YarnUnLinkCraxAngularCore { 
-  Write-Host "Checking if Crax-Core is on local device"
-  $Currentlocation = Get-Location
-  if (Test-Path -Path "..\Angular.Core.Crax\dist\angular-crax-core") {
-    yarn unlink "@crax/angular-core"
-    Set-Location "..\Angular.Core.Crax\dist\angular-crax-core"
-    yarn unlink 
-    Set-Location "$Currentlocation"
-    Write-Host "Successfully unlinked Core package"
-  }
-  else {
-    Write-Host "Please clone the repository onto your device, or if you already have the repository build the library first using 'ng build --watch'"
-  }
-  
-}
-New-Alias -Name "yulccm" -Value Open-YarnUnLinkCraxAngularCore -Force -Option AllScope
-
-function Open-YarnUnLinkCraxAngularForm { 
-  Write-Host "Checking if Crax-Forms is on local device"
-  $Currentlocation = Get-Location
-  if (Test-Path -Path "..\Angular.Forms.Crax\dist\angular-crax-forms") {
-    yarn unlink "@crax/angular-forms"
-    Set-Location "..\Angular.Forms.Crax\dist\angular-crax-forms"
-    yarn unlink
-    Set-Location "$Currentlocation"
-    Write-Host "Successfully unlinked Forms package"
-  }
-  else {
-    Write-Host "Please clone the repository onto your device, or if you already have the repository build the library first using 'ng build --watch'"
-  }
-  
-}
-New-Alias -Name "yulcfm" -Value Open-YarnUnLinkCraxAngularForm -Force -Option AllScope
-
-function Open-YarnUnLinkCraxAngularTable { 
-  Write-Host "Checking if Crax-Table is on local device"
-  $Currentlocation = Get-Location
-  if (Test-Path -Path "..\Angular.Table.Crax\dist\angular-crax-table") {
-    yarn unlink "@crax/angular-table"
-    Set-Location "..\Angular.Table.Crax\dist\angular-crax-table"
-    yarn unlink
-    Set-Location "$Currentlocation"
-    Write-Host "Successfully unlinked Table package"
-  }
-  else {
-    Write-Host "Please clone the repository onto your device, or if you already have the repository build the library first using 'ng build --watch'"
-  }
-}
-New-Alias -Name "yulctm" -Value Open-YarnUnLinkCraxAngularTable -Force -Option AllScope
+# # yarn link/unlink bookit
+# function Open-YarnLinkCraxAngularCore { 
+#     Write-Host "Checking if Crax-Core is on local device"
+#     $Currentlocation = Get-Location
+#     if (Test-Path -Path "..\Angular.Core.Crax\dist\angular-crax-core") {
+#         Set-Location "..\Angular.Core.Crax\dist\angular-crax-core"
+#         yarn link 
+#         Set-Location "$Currentlocation"
+#         yarn link "@crax/angular-core"
+#         Write-Host "Successfully linked Core package"
+#     }
+#     else {
+#         Write-Host "CRAX-CORE NOT FOUND!"
+#         Write-Host "Please clone the Crax.Core.Angular repository onto your device, or if you already have the repository build the library first by navigating into the folder and using 'ng build --watch'"
+#     }
+# }
+# New-Alias -Name "ylccm" -Value Open-YarnLinkCraxAngularCore -Force -Option AllScope
